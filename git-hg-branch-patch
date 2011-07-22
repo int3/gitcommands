@@ -1,0 +1,9 @@
+#! /bin/sh
+
+# Usage:
+# git hg-branch-patch [<branch>]
+# Generates a diff from <branch> to master.
+
+`dirname $0`/_git_hg_patcher $1 $2
+git branch-diff -U8 $1 | sed "/^index.*$/d" >> hg.patch
+echo "Patch written to hg.patch."

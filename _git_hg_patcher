@@ -1,0 +1,14 @@
+#! /bin/sh
+
+TMPFILE=/tmp/githg.commitmsg
+
+if [ -n "$2" ]; then
+    git show-branch $2 | sed "s/\[[^]]*\] \(.*\)/\1/" > $TMPFILE
+else
+    echo '' > $TMPFILE
+fi
+
+$(git var GIT_EDITOR) $TMPFILE
+git var GIT_AUTHOR_IDENT | sed "s/\(.*\) [^ ][^ ]* [^ ][^ ]*/# User \1/" > hg.patch
+cat $TMPFILE >> hg.patch
+echo "\n" >> hg.patch

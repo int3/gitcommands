@@ -1,0 +1,9 @@
+#! /bin/sh
+
+# Usage:
+# git hg-patch [<commit 1>] [<commit 2>]
+# Generates a diff from <commit 1> to <commit 2>.
+
+`dirname $0`/_git_hg_patcher $1 $2
+git diff -U8 $1 $2 | sed "/^index.*$/d" >> hg.patch
+echo "Patch written to hg.patch."
